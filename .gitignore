@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+*.DS_Store
+**/.DS_Store
+._*
+
+# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temp files
+*.tmp
+*.temp
+.DS_Store
+*.DS_Store
+**/.DS_Store
+
+ll_env/
+b_env/
+*.sqlite3
+
