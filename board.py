@@ -1,13 +1,12 @@
-from jail import Jail
-from treasure import Treasure
-from hotel import hotel
+from cell import Cell
+from player import Player
 
 class Board:
     """Class to manage the game board."""
 
     def __init__(self, b_game):
         """Initialise board attributes."""
-        self.b_game = b_game
+        super.__init__(b_game)
 
         self.cells_string = b_game.cells_string
         # Clean and prepare cells
@@ -16,5 +15,7 @@ class Board:
 
         self.dice_output = b_game.dice_output
 
-    def move_cell(self):
+    def move_cell(self, index, old_position):
         """Move position as per dice output, keeping within bounds of the board."""
+        next_position = old_position + self.dice_output[index]
+        self.player.position = next_position % len(self.cells)

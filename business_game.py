@@ -1,7 +1,6 @@
 from board import Board
 
-from money import Money
-from players import Players
+from player import Player
 
 class BusinessGame:
     """ Overall class to manage the game assets and behaviour"""
@@ -11,7 +10,8 @@ class BusinessGame:
         self.dice_output = dice_output
         self.cells_string = cells_string
         # Preapre board
-        self.board = Board(self, self.cells_string)
+        self.board = Board(self)
+        self.n_players = n_players
 
     def display_result(self):
         """Display each palyer's total worth."""
