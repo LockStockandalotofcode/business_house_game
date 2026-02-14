@@ -8,37 +8,32 @@ class CellType(Enum):
     HOTEL = 200
 
 class Cell:
-    def __init__(self, name, cell_type: CellType):
-        """Basic class for all cells."""
+    def __init__(self, name, cell_type=CellType.NORMAL):
         self.name = name
         self.cell_type = cell_type
         self.impact_value = self.cell_type.value
 
-class Jail:
-    """Overall class to manage the cell type J - Jail"""
+class Treasure(Cell):
+    def __init__(self, name="Treasure"):
+        super().__init__(name, CellType.TREASURE)
+        self.value = 200
 
-    def __init__(self):
-        """Initialise attributes of this class."""
+class Jail(Cell):
+    def __init__(self, name="Jail"):
+        super().__init__(name, CellType.JAIL)
         self.fine = 150
 
-    def if_not_enough_money(self):
-        """Skip player's turn if not enough money for fine"""
+    # def if_not_enough_money(self):
         
 class Hotel(Cell):
-    """Overall class to manage Hotels cell type."""
-
     def __init__(self, name: str):
-        """Initialise Hotel attributes."""
-        super().__init__(name, self.cell_type.HOTEL)
+        super().__init__(name, CellType.HOTEL)
         self.price = self.cell_type.value
         self.rent = 50
 
         # flag and owner in one variable
         self.owner = None
     
-    def make_owner(self):
-        """Designate owner to hotel, charge him for buying the hotel."""
+    # def set_owner(self):
 
-
-    def charge_guest(self):
-        """Charge guest for a pre-owned hotel."""
+    # def charge_guest(self):
