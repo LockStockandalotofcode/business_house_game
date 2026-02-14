@@ -15,7 +15,7 @@ class Board:
 
         self.dice_output = b_game.dice_output
 
-    def move_cell(self, index, old_position):
+    def move_cell(self, dice_output, old_position):
         """Move position as per dice output, keeping within bounds of the board."""
-        next_position = old_position + self.dice_output[index]
-        self.player.position = next_position % len(self.cells)
+        next_position = old_position + self.dice_output
+        next_position = next_position % len(self.cells)

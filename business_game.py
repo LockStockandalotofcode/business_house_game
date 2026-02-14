@@ -13,6 +13,6 @@ class BusinessGame:
         self.board = Board(self)
         self.n_players = n_players
 
-    def display_result(self):
-        """Display each palyer's total worth."""
+    # def display_result(self):
+    #     """Display each palyer's total worth."""
         
