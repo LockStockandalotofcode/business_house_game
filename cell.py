@@ -8,7 +8,7 @@ class CellType(Enum):
     HOTEL = 200
 
 class Cell:
-    def __init__(self, name, cell_type=CellType.NORMAL):
+    def __init__(self, name="Empty", cell_type=CellType.NORMAL):
         self.name = name
         self.cell_type = cell_type
         self.impact_value = self.cell_type.value
