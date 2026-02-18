@@ -7,25 +7,25 @@ class CellType(Enum):
     TREASURE = 200
     HOTEL = 200
 
-class Cell:
-    def __init__(self, name="Empty", cell_type=CellType.NORMAL):
+class EmptyCell:
+    def __init__(self, name="Empty Cell", cell_type=CellType.NORMAL):
         self.name = name
         self.cell_type = cell_type
         self.impact_value = self.cell_type.value
 
-class Treasure(Cell):
+class Treasure(EmptyCell):
     def __init__(self, name="Treasure"):
         super().__init__(name, CellType.TREASURE)
         self.value = 200
 
-class Jail(Cell):
+class Jail(EmptyCell):
     def __init__(self, name="Jail"):
         super().__init__(name, CellType.JAIL)
         self.fine = 150
 
     # def if_not_enough_money(self):
         
-class Hotel(Cell):
+class Hotel(EmptyCell):
     def __init__(self, name: str):
         super().__init__(name, CellType.HOTEL)
         self.price = self.cell_type.value
