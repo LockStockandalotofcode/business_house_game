@@ -1,18 +1,22 @@
 from player import Player
 from board import Board
+from dice import Dice
 
 class BusinessGame:
     def __init__(self, cells_string, dice_output_list, n_players):
-        self.dice_output_list = dice_output_list
+        self.dice = Dice(dice_output_list)
         # create players
         self.players = Player.create_players(n_players)
         # create board
         self.board = Board(cells_string, self.players)
 
     def run_game(self):
+        total_rolls = len(self.dice.dice_output_list)
         print(f"Starting game with {len(self.players)} players:")
-        for turn_index, dice_output in enumerate(self.dice_output_list):
-            self.board.take_turn(dice_output, turn_index)
+        for turn_index in range(total_rolls):
+            roll = self.dice.roll_die()
+            if roll is not None:
+                self.board.take_turn(dice_output, turn_index)
         self.board.display_winner()
 
 if __name__ == "__main__":

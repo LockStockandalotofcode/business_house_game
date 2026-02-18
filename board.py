@@ -1,4 +1,5 @@
 from cell import EmptyCell, Treasure, Jail, Hotel
+from dice import Dice
 
 class Board:
     def __init__(self, cells_string, players):
@@ -20,7 +21,6 @@ class Board:
                 obj = cell_class("Hotel")
             else:
                 obj = cell_class()
-
             board_layout.append(obj)
 
         return board_layout
