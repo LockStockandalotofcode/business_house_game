@@ -6,6 +6,7 @@ class Board:
         # Values below are classes and not instances
         self.mapping = {'E': EmptyCell, 'J': Jail, 'H': Hotel, 'T': Treasure}
         self.cells = self.build_board(cells_string)
+        self.players = players
 
     def build_board(self, cells_string):
         string_to_list = cells_string.split(',')
@@ -24,27 +25,27 @@ class Board:
 
         return board_layout
     
-    def take_turn(self, dice_output, turn_index, players):
-            curr_player = self.get_current_player(players, turn_index)
+    def take_turn(self, dice_output, turn_index):
+            curr_player = self.get_current_player(turn_index)
             # old_pos = curr_player.position
             new_pos = self.move_player(dice_output, curr_player)
             cell = self.get_cell_at(new_pos)
             self.handle_turn_logic(curr_player, cell)
 
-    def get_current_player(self, players, turn_index):
-        n = len(players)
+    def get_current_player(self, turn_index):
+        n = len(self.players)
         # Determine current player
         player_index = (turn_index) % n
-        curr_player = players[player_index]
+        curr_player = self.players[player_index]
 
         return curr_player
 
-    def move_player(self, dice_output, player):
+    def move_player(self, dice_output, curr_player):
         # calculate new position with wrap around logic once a round trip of board is completed
         # given dice_output and the corresponding player
         # position of palyer is accessed with its attribute
-        player.position = (player.position + dice_output) % len(self.cells)
-        return player.position
+        curr_player.position = (curr_player.position + dice_output) % len(self.cells)
+        return curr_player.position
 
     def get_cell_at(self, position):
         return self.cells[position-1]
@@ -64,3 +65,9 @@ class Board:
                 # transfer money from player to hotel owner
                 player.cash -= cell.rent
                 cell.owner.cash += cell.rent
+
+    def display_winner(self):
+        # x is a player object in self.players list
+        self.players.sort(key=lambda x: x.net_worth, reverse=True)
+        for p in self.players:
+            print(f"{p.name} has total worth {p.net_worth}")
