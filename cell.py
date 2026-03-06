@@ -1,39 +1,37 @@
-from player import Player
-from enum import Enum
+from abc import ABC, abstractmethod
 
-class CellType(Enum):
-    NORMAL = 0
-    JAIL = -150
-    TREASURE = 200
-    HOTEL = 200
+class Cell(ABC):
+    @abstractmethod
+    def apply(self, player):
+        pass
 
-class EmptyCell:
-    def __init__(self, name="Empty Cell", cell_type=CellType.NORMAL):
-        self.name = name
-        self.cell_type = cell_type
-        self.impact_value = self.cell_type.value
+# child classes
+class EmptyCell(Cell):
+    def apply(self, player):
+        pass
 
-class Treasure(EmptyCell):
-    def __init__(self, name="Treasure"):
-        super().__init__(name, CellType.TREASURE)
-        self.value = 200
-
-class Jail(EmptyCell):
-    def __init__(self, name="Jail"):
-        super().__init__(name, CellType.JAIL)
-        self.fine = 150
-
-    # def if_not_enough_money(self):
-        
-class Hotel(EmptyCell):
-    def __init__(self, name: str):
-        super().__init__(name, CellType.HOTEL)
-        self.price = self.cell_type.value
-        self.rent = 50
-
-        # flag and owner in one variable
-        self.owner = None
+class Jail(Cell):
+    def __init__(self, fine=150):
+        self.fine = fine
     
-    # def set_owner(self):
+    def apply(self, player):
+        player.cash -= self.fine
 
-    # def charge_guest(self):
+class Treasure(Cell):
+    def __init__(self, value=200):
+        self.value = value
+    
+    def apply(self, player):
+        player.cash += self.value
+
+class Hotel(Cell):
+    def __init__(self, price=200, rent=50):
+        self.price = price
+        self.rent = rent
+        self.owner = None
+
+    def apply(self, player):
+        if self.owner is None and player.cash >= self.price:
+            player.buy_hotel(self)
+        elif self.owner != player:
+            player.pay_rent(self.owner, self.rent)

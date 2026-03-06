@@ -13,14 +13,10 @@ class Board:
         string_to_list = cells_string.split(',')
         board_layout = []
 
-        for i, char in enumerate(string_to_list):
+        for _, char in enumerate(string_to_list):
             char = char.strip()[0]
             cell_class = self.mapping.get(char, EmptyCell)
-            # Create the cell object as per character
-            if char == 'H':
-                obj = cell_class("Hotel")
-            else:
-                obj = cell_class()
+            obj = cell_class()
             board_layout.append(obj)
 
         return board_layout
@@ -51,20 +47,7 @@ class Board:
         return self.cells[position-1]
         
     def handle_turn_logic(self, player, cell):
-        if isinstance(cell, Jail):
-            player.cash -= cell.fine
-        elif isinstance(cell, Treasure):
-            player.cash += cell.value
-        elif isinstance(cell, Hotel):
-            if cell.owner is None and player.cash >= cell.price:
-                # set owner, update player's assets
-                player.cash -= cell.price
-                cell.owner = player
-                player.hotels_owned.append(cell)
-            elif cell.owner:
-                # transfer money from player to hotel owner
-                player.cash -= cell.rent
-                cell.owner.cash += cell.rent
+        cell.apply(player)
 
     def display_winner(self):
         # x is a player object in self.players list

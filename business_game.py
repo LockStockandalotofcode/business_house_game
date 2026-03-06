@@ -16,8 +16,34 @@ class BusinessGame:
         for turn_index in range(total_rolls):
             roll = self.dice.roll_die()
             if roll is not None:
-                self.board.take_turn(dice_output, turn_index)
+                self.board.take_turn(roll, turn_index)
         self.board.display_winner()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     cells = "H,H,J,H,E,T,J,T,J,E,H,J,T,H,E,E,J,H,E,T,J,T,E,E,H,J,T,H,J,H,E,J,H,E,T,J,T,J,E,H,J,T,E,H,E"
