@@ -35,3 +35,18 @@ class Hotel(Cell):
             player.buy_hotel(self)
         elif self.owner != player:
             player.pay_rent(self.owner, self.rent)
+
+class CellCreator:
+    """creation of cell objects"""
+    _MAPPING = {
+        'E': EmptyCell,
+         'J': Jail,
+         'H': Hotel,
+         'T': Treasure
+    }
+
+    @classmethod
+    def create_cell(cls, char):
+        char = char.strip()[0]
+        cell_class = cls._MAPPING.get(char, EmptyCell)
+        return cell_class()

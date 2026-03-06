@@ -1,32 +1,30 @@
-from player import Player
+from player import Player, PlayerCreator
 from board import Board
 from dice import Dice
 
 class BusinessGame:
     def __init__(self, cells_string, dice_output_list, n_players):
+        self.board = Board(cells_string)
         self.dice = Dice(dice_output_list)
-        # create players
-        self.players = Player.create_players(n_players)
-        # create board
-        self.board = Board(cells_string, self.players)
+        self.players = PlayerCreator.create_players(n_players)
 
     def run_game(self):        
-        total_rolls = len(self.dice.dice_output_list)
-
         print(f"Starting game with {len(self.players)} players:")
-        
-        for turn_index in range(total_rolls):
+
+        for turn_index, roll in enumerate(self.dice.dice_output_list):
             # determine current player
             player = self.players[(turn_index) % len(self.players)]
             # tell board to process the turn for this player
-            roll = self.dice.roll_die()
             if roll is not None:
                 self.board.process_turn(player, roll)
-        self.board.display_winner()
 
+        self._display_winner(self.players)
 
-
-
+    def _display_winner(self, players):
+        # x is a player object in self.players list
+        players.sort(key=lambda x: x.net_worth, reverse=True)
+        for p in players:
+            print(f"{p.name} has total worth {p.net_worth}")
 
 
 

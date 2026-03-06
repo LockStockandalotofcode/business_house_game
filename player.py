@@ -1,8 +1,6 @@
 class Player:
-    """Overall class to manage player and their money."""
 
     def __init__(self, name, initial_money=1000):
-        """Initialise Player attributes."""
         self.name = name
         self.cash = initial_money
         self.hotels = [] # list of hotel objects owned by player
@@ -22,8 +20,7 @@ class Player:
         self.cash -= rent_amount
         owner.cash += rent_amount
     
-    @classmethod
-    def create_players(cls, n_players):
-        # cls refers to Player class 
-        # that is it is a method of the class and not  of a specific player instance
+class PlayerCreator:
+    @staticmethod
+    def create_players(n_players):
         return [Player(f"Player-{i+1}") for i in range(n_players)] # list of player objects indentified by their name
