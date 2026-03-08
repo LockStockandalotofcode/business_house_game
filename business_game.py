@@ -1,4 +1,4 @@
-from player import Player, PlayerCreator
+from player import PlayerCreator
 from board import Board
 from dice import Dice
 
@@ -18,12 +18,12 @@ class BusinessGame:
             if roll is not None:
                 self.board.process_turn(player, roll)
 
-        self._display_winner(self.players)
+        self._display_winner()
 
-    def _display_winner(self, players):
+    def _display_winner(self):
         # x is a player object in self.players list
         players.sort(key=lambda x: x.net_worth, reverse=True)
-        for p in players:
+        for p in self.players:
             print(f"{p.name} has total worth {p.net_worth}")
 
 
